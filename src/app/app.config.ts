@@ -7,8 +7,7 @@ import { authInterceptor } from './auth/auth.interceptor';
 
 const auth = new KeycloakAuthService();
 
-  // 🔐 inicializa Keycloak ANTES do Angular subir
-  await auth.init();
+await auth.init();
 
 export const appConfig: ApplicationConfig = {
   providers: [
