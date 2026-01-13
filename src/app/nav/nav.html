@@ -7,11 +7,6 @@
             <a routerLink="/admin" class="mx-2 text-blue-600 font-bold">ADMIN</a>
         }
            
-        @if(authenticated()){
-            <button (click)="logout()" class="mx-2 py-1 px-2 hover:bg-purple-400 rounded-md bg-purple-600 text-white">Logout</button>
-        }@else{
-            <button (click)="login()" class="mx-2 py-1 px-2 hover:bg-purple-400 rounded-md bg-purple-600 text-white">Login</button>
-        }
     </nav>
 </header>
  

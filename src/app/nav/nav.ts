@@ -10,28 +10,9 @@ import { KeycloakAuthService } from '../keycloak/keycloak.service';
 })
 export class Nav {
   key = inject(KeycloakAuthService);
-  cdr = inject(ChangeDetectorRef);
-
-  ngOnInit(){
-    this.cdr.detectChanges();
-    console.log(this.key.hasRole('ADMIN'));
-  }
-  
-  authenticated(): boolean{
-    return this.key.isLoggedIn();
-  }
 
   isAdmin(): boolean {
     return this.key.hasResourceRole('ADMIN', 'users-api');
-  }
-
-  login(){
-    this.key.login();
-  }
-
-  logout(){
-    this.key.logout();
-    this.cdr.detectChanges();
   }
 
 }
