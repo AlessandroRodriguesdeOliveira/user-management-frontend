@@ -11,10 +11,14 @@ export class KeycloakAuthService {
     });
 
     await this.keycloak.init({
-      onLoad: 'login-required',
+      onLoad: 'check-sso',
       pkceMethod: 'S256',
-      checkLoginIframe: false
+      silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html'
     });
+  }
+
+  login() {
+    return this.keycloak.login();
   }
 
   get token() {
