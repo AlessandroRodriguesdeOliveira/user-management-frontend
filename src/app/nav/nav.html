@@ -1,9 +1,17 @@
 <header class="w-full h-15  flex justify-between items-center p-2">
-    <h2 class="font-mono">User Management</h2>
-    <nav class="flex">
-        <a routerLink="/user" class="mx-2 py-2 px-2 hover:bg-blue-400 rounded-md bg-blue-600 text-white">USERS</a>
-        <a routerLink="/admin" class="mx-2 py-2 px-2 hover:bg-blue-400 rounded-md bg-blue-600 text-white">ADMIN</a>
-        <button (click)="logout()" class="mx-2 py-2 px-2 hover:bg-purple-400 rounded-md bg-purple-600 text-white">Logout</button>
+    <h2 class="font-bold">User Management</h2>
+    <nav class="flex justify-center items-center">
+        <a routerLink="/user" class="mx-2 text-blue-600 font-bold">USERS</a>
+
+        @if(isAdmin()){ 
+            <a routerLink="/admin" class="mx-2 text-blue-600 font-bold">ADMIN</a>
+        }
+           
+        @if(authenticated()){
+            <button (click)="logout()" class="mx-2 py-1 px-2 hover:bg-purple-400 rounded-md bg-purple-600 text-white">Logout</button>
+        }@else{
+            <button (click)="login()" class="mx-2 py-1 px-2 hover:bg-purple-400 rounded-md bg-purple-600 text-white">Login</button>
+        }
     </nav>
 </header>
  

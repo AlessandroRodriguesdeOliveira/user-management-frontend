@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { KeycloakAuthService } from '../keycloak/keycloak.service';
 
 @Component({
@@ -10,9 +10,28 @@ import { KeycloakAuthService } from '../keycloak/keycloak.service';
 })
 export class Nav {
   key = inject(KeycloakAuthService);
+  cdr = inject(ChangeDetectorRef);
+
+  ngOnInit(){
+    this.cdr.detectChanges();
+    console.log(this.key.hasRole('ADMIN'));
+  }
+  
+  authenticated(): boolean{
+    return this.key.isLoggedIn();
+  }
+
+  isAdmin(): boolean {
+    return this.key.hasResourceRole('ADMIN', 'users-api');
+  }
+
+  login(){
+    this.key.login();
+  }
 
   logout(){
     this.key.logout();
+    this.cdr.detectChanges();
   }
 
 }

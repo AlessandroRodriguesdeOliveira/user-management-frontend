@@ -11,9 +11,9 @@ export class KeycloakAuthService {
     });
 
     await this.keycloak.init({
-      onLoad: 'check-sso',
+      onLoad: 'check-sso', 
       pkceMethod: 'S256',
-      silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html'
+      checkLoginIframe: false 
     });
   }
 
@@ -35,6 +35,10 @@ export class KeycloakAuthService {
 
   hasRole(role: string) {
     return this.keycloak.hasRealmRole(role);
+  }
+
+  hasResourceRole(role: string, resource: string){
+    return this.keycloak.hasResourceRole(role, resource)
   }
 
   get profile() {

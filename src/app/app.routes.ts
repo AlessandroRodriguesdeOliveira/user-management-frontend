@@ -11,6 +11,12 @@ export const routes: Routes = [
 
     },
     {
+        path: 'admin',
+        canActivate: [authGuard],
+        loadComponent: () => 
+            import('./admin-main/admin-main').then(c => c.AdminMain)
+    },
+    {
         path: '',
         redirectTo: 'user',
         pathMatch: 'full'
@@ -19,11 +25,5 @@ export const routes: Routes = [
         path: '**',
         redirectTo: 'user',
         pathMatch: 'full'
-    },
-    {
-        path: 'admin',
-        canActivate: [authGuard],
-        loadComponent: () => 
-            import('./admin-main/admin-main').then(c => c.AdminMain)
     }
 ];
