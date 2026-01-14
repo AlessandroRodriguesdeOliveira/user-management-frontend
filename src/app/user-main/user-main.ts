@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Service } from '../service/service';
-import { UserResponseDTO } from '../dto/UserResponseDTO';
+import { UserResponseDTO } from '../dto/UserResponseDTO'; 
 import { UserPage } from '../dto/UserPageDTO';
 
 @Component({
@@ -25,7 +25,7 @@ export class UserMain {
 
   listAll(){
     this.loading = true;
-    this.userServ.listAll(this.page, 10).subscribe({
+    this.userServ.listAll(this.page, 5).subscribe({
       next : (page : UserPage<UserResponseDTO> ) => {
         this.users = page.content;
         this.totalPages = page.totalElements;
