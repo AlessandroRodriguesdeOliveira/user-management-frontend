@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Service } from '../service/service';
-import { UserResponseDTO } from '../dto/UserResquestDTO';
-import { UserRequestDTO } from '../dto/UserResponseDTO';
+import { UserResponseDTO } from '../dto/UserResponseDTO';
 import { UserPage } from '../dto/UserPageDTO';
 
 @Component({
@@ -15,7 +14,7 @@ export class UserMain {
   userServ = inject(Service);
   cdf = inject(ChangeDetectorRef);
 
-  users:UserRequestDTO[] = [];
+  users:UserResponseDTO[] = [];
   page = 0;
   totalPages = 0;
   loading = false;
@@ -27,7 +26,7 @@ export class UserMain {
   listAll(){
     this.loading = true;
     this.userServ.listAll(this.page, 10).subscribe({
-      next : (page : UserPage<UserRequestDTO> ) => {
+      next : (page : UserPage<UserResponseDTO> ) => {
         this.users = page.content;
         this.totalPages = page.totalElements;
         this.loading = false;
