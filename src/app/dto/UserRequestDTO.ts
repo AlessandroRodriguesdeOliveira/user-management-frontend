@@ -1,4 +1,4 @@
 export interface UserRequestDTO {
-    nome:string;
+    username:string;
     email:string;
 }
