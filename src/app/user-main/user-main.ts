@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Service } from '../service/service';
-import { UserResponseDTO } from '../dto/UserResponseDTO';
-import { UserRequestDTO } from '../dto/UserRequestDTO';
+import { UserResponseDTO } from '../dto/UserResquestDTO';
+import { UserRequestDTO } from '../dto/UserResponseDTO';
 import { UserPage } from '../dto/UserPageDTO';
 
 @Component({
