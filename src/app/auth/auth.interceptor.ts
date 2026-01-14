@@ -1,12 +1,11 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { KeycloakAuthService } from '../keycloak/keycloak.service'; 
-import { from, switchMap } from 'rxjs';
+import { catchError, from, switchMap } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(KeycloakAuthService);
 
-  // ❌ Nunca interceptar OPTIONS
   if (req.method === 'OPTIONS') {
     return next(req);
   }
@@ -27,6 +26,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         });
       }
 
+      return next(req);
+    }),
+    catchError(err => {
+      console.error("Error update token: " + err);
       return next(req);
     })
   );
