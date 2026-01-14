@@ -1,6 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Service } from '../service/service';
-import { User } from '../dto/UserResponseDTO';
+import { UserResponseDTO } from '../dto/UserResponseDTO';
+import { UserRequestDTO } from '../dto/UserRequestDTO';
+import { UserPage } from '../dto/UserPageDTO';
 
 @Component({
   selector: 'app-user-main',
@@ -11,18 +13,35 @@ import { User } from '../dto/UserResponseDTO';
 export class UserMain {
 
   userServ = inject(Service);
+  cdf = inject(ChangeDetectorRef);
 
-  users:User[] = [];
+  users:UserRequestDTO[] = [];
+  page = 0;
+  totalPages = 0;
+  loading = false;
 
   ngOnInit(){
     this.listAll();
   }
 
   listAll(){
-    this.userServ.listAll().subscribe(data => {
-      this.users = data;
-      console.log(data);
+    this.loading = true;
+    this.userServ.listAll(this.page, 10).subscribe({
+      next : (page : UserPage<UserRequestDTO> ) => {
+        this.users = page.content;
+        this.totalPages = page.totalElements;
+        this.loading = false;
+        this.cdf.detectChanges();
+      },
+      error: () => this.loading = false
     });
+  }
+
+  carregarMais(){
+    if(this.page + 1 < this.totalPages){
+      this.page++;
+      this.listAll()
+    }
   }
 
 }

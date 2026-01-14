@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../dto/UserResponseDTO';
+import { UserPage } from '../dto/UserPageDTO';
+import { UserRequestDTO } from '../dto/UserRequestDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -10,11 +11,11 @@ export class Service {
 
   http = inject(HttpClient);
 
-  listAll():Observable<User[]> {
-    return this.http.get<User[]>("http://localhost:8081/users/findAll");
+  listAll(page: number, size: number):Observable<UserPage<UserRequestDTO>> {
+    return this.http.get<UserPage<UserRequestDTO>>("http://localhost:8081/users/findAll?page=" + page + "&size=" + size);
   }
 
-  listUser(id: number): Observable<User> {
+  /*listUser(id: number): Observable<User> {
     return this.http.get<User>("http://localhost:8081/users/get/" + id);
   }
 
@@ -33,7 +34,7 @@ export class Service {
 
   delete(id: number) {
     return this.http.delete("http://localhost:8081/users/delete/" + id);
-  }
+  }*/
 
 
 

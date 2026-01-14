@@ -1,24 +1,30 @@
 <main class="my-10">
-    <section class=" flex flex-row flex-wrap justify-center gap-5 " >
-        @if(!(users.length > 0)){
-            <article class="rounded-lg w-80 p-4 border-gray-200 border bg-white shadow-md flex justify-center flex-col wrap-break-word gap-5">
-                <h1 class="m-auto text-2xl text-red-800 font-bold">Sem users!</h1>
-            </article>
-            
-        }@else {
-            @for(user of users; track user){
-                <article class="rounded-lg w-80 p-4 border-gray-200 border bg-white shadow-md flex justify-center flex-col wrap-break-word gap-5">
-            <div >
-                <h3 class="rounded-2xl bg-purple-100 text-purple-500 px-2 w-fit font-mono ">Nome:</h3>
-                <p class="ml-8 mr-2 "></p>
-            </div>
-            <div>
-                <h3 class="rounded-2xl bg-fuchsia-100 text-fuchsia-500 px-2 w-fit font-mono ">Email:</h3>
-                <p class="ml-8 mr-2"></p>
-            </div>
-        </article>
+    <section class=" flex flex-row flex-wrap justify-center gap-5 ">
+
+        @if(users.length === 0 && loading){
+            <h1 class="font-extrabold text-2xl text-blue-600">Carregando...</h1>
+        }@else{
+            @if(users.length === 0 && !loading){
+                <article
+                    class="rounded-lg w-80 p-4 border-gray-200 border bg-white shadow-md flex justify-center flex-col wrap-break-word gap-5">
+                    <h1 class="m-auto text-2xl text-red-800 font-bold">Sem usuários!</h1>
+                </article>
+            }@else{
+                @for(user of users; track user){
+                    <article
+                        class="rounded-lg w-80 p-4 border-gray-200 border bg-white shadow-md flex justify-center flex-col wrap-break-word gap-5">
+                        <div>
+                            <h3 class="rounded-2xl bg-purple-100 text-purple-500 px-2 w-fit font-mono ">Nome:</h3>
+                            <p class="ml-8 mr-2 ">{{ user.username }}</p>
+                        </div>
+                        <div>
+                            <h3 class="rounded-2xl bg-fuchsia-100 text-fuchsia-500 px-2 w-fit font-mono ">Email:</h3>
+                            <p class="ml-8 mr-2">{{ user.email }}</p>
+                        </div>
+                    </article>
+                }
             }
         }
-    
+
     </section>
 </main>
