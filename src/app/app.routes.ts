@@ -17,7 +17,7 @@ export const routes: Routes = [
             import('./admin-main/admin-main').then(c => c.AdminMain)
     },
     {
-        path: 'update',
+        path: 'update/:id',
         canActivate: [authGuard],
         loadComponent: () => 
             import('./user-update/user-update').then(c => c.UserUpdate)

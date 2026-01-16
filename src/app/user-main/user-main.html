@@ -25,6 +25,11 @@
                             <h3 class="rounded-md bg-fuchsia-100 text-fuchsia-500 px-1 w-fit h-fit font-mono ">Email:</h3>
                             <p class="ml-2 max-w-50">{{ user.email }}</p>
                         </div>
+                        <div class="flex justify-center gap-1">
+                            <a [routerLink]="['/update',user.id]" class="bg-blue-700 p-2 rounded-md text-white font-bold hover:bg-blue-800 ">Atualizar</a>
+                            <a [routerLink]="['/update',user.id]" class="bg-blue-700 p-2 rounded-md text-white font-bold hover:bg-blue-800">Deletar</a>
+                        </div>
+
                     </article>
                 }
             }

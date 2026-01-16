@@ -2,6 +2,7 @@ import { Component, inject, Input } from '@angular/core';
 import { UserRequestDTO } from '../dto/UserRequestDTO';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Service } from '../service/service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-update',
@@ -12,9 +13,15 @@ import { Service } from '../service/service';
 export class UserUpdate {
 
   serv = inject(Service);
+  route = inject(ActivatedRoute);
 
-  @Input({required: true}) id!: number;
+  id!: number;
 
+  ngOnInit() {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.id = id;
+    this.list();
+  }
   userSaved: UserRequestDTO = {
     username:  '',
     email: ''
@@ -24,18 +31,6 @@ export class UserUpdate {
     username: new FormControl<string>(''),
     email: new FormControl<string>(''),
   })
-
-  ngOnInit(){
-    if(this.id){
-      this.list();
-    }
-  }
-
-  ngOnChanges(){
-    if(this.id){
-      this.list();
-    }
-  }
 
   list(){
     this.serv.listUser(this.id).subscribe({
@@ -66,7 +61,10 @@ export class UserUpdate {
 
     if(userNameChanged && userEmailChanged){
       this.serv.updateComplete(this.id, userForm).subscribe({
-        next:() => console.log('ok'),
+        next:() =>{ 
+          this.userSaved = {...userForm};
+          alert("UPATED!");
+      },
         error: err => console.log("Error:", err.error.message)
       });
       return;
@@ -78,7 +76,10 @@ export class UserUpdate {
     if (userEmailChanged) partial.email = userForm.email;
 
     this.serv.updatePartial(this.id, partial).subscribe({
-      next: () => console.log('ok'),
+      next: () => {
+        this.userSaved = {...userForm};
+        alert("UPATED!");
+    },
       error: err => console.log("Error: ", err.error.message)
     })
     return;

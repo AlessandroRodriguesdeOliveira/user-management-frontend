@@ -2,10 +2,11 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Service } from '../service/service';
 import { UserResponseDTO } from '../dto/UserResponseDTO'; 
 import { UserPage } from '../dto/UserPageDTO';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-user-main',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './user-main.html',
   styleUrl: './user-main.css',
 })
