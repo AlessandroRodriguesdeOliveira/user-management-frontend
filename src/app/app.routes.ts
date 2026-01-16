@@ -23,6 +23,12 @@ export const routes: Routes = [
             import('./user-update/user-update').then(c => c.UserUpdate)
     },
     {
+        path: 'delete/:id',
+        canActivate: [authGuard],
+        loadComponent: () => 
+            import('./user-delete/user-delete').then(c => c.UserDelete)
+    },
+    {
         path: '',
         redirectTo: 'user',
         pathMatch: 'full'

@@ -1,0 +1,24 @@
+<main class="my-10">
+    <section class=" flex flex-row flex-wrap justify-center gap-5 ">
+                    <article
+                        class="rounded-lg max-w-80 p-4 border-gray-200 border bg-white shadow-md flex justify-center flex-col wrap-break-word gap-3">
+                        <h1 class="font-extrabold text-red-600 text-2xl self-center">Are you sure?</h1>
+                        <div class="flex">
+                            <h3 class="rounded-md bg-pink-100 text-pink-500 px-1 w-fit h-fit font-mono ">ID:</h3>
+                            <p class="ml-2 max-w-50">{{ id }}</p>
+                        </div>
+                        <div class="flex">
+                            <h3 class="rounded-md bg-purple-100 text-purple-500 px-1 w-fit  h-fit font-mono ">Username:</h3>
+                            <p class="ml-2 max-w-50">{{ username }}</p>
+                        </div>
+                        <div class="flex">
+                            <h3 class="rounded-md bg-fuchsia-100 text-fuchsia-500 px-1 w-fit h-fit font-mono ">Email:</h3>
+                            <p class="ml-2 max-w-50">{{ email }}</p>
+                        </div>
+                        <div class="flex justify-center gap-1">
+                            <button (click)="cancelar()" class="bg-red-700 p-2 rounded-md text-white font-bold hover:bg-red-800">Cancel</button>
+                            <button (click)="deletarUser()" class="bg-blue-700 p-2 rounded-md text-white font-bold hover:bg-blue-800">Delete</button>
+                        </div>
+                    </article>
+    </section>
+</main>
