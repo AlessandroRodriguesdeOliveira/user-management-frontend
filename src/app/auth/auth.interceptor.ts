@@ -29,7 +29,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       return next(req);
     }),
     catchError(err => {
-      console.error("Error update token: " + err);
+      console.error("Error update token: ", err.error.message);
       return next(req);
     })
   );

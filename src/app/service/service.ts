@@ -29,7 +29,7 @@ export class Service {
     return this.http.put<UserResponseDTO>("http://localhost:8081/users/update/" + id, user);
   }
 
-  updatePartial(id: number, user: UserRequestDTO): Observable<UserResponseDTO> {
+  updatePartial(id: number, user: Partial<UserRequestDTO>): Observable<UserResponseDTO> {
     return this.http.patch<UserResponseDTO>("http://localhost:8081/users/patch/" + id, user);
 
   }
