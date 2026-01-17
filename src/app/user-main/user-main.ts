@@ -3,6 +3,7 @@ import { Service } from '../service/service';
 import { UserResponseDTO } from '../dto/UserResponseDTO'; 
 import { UserPage } from '../dto/UserPageDTO';
 import { RouterLink } from "@angular/router";
+import { ErrorAlertDTO } from '../dto/ErrorAlertDTO';
 
 @Component({
   selector: 'app-user-main',
@@ -14,6 +15,8 @@ export class UserMain {
 
   userServ = inject(Service);
   cdf = inject(ChangeDetectorRef);
+
+  error: ErrorAlertDTO | null = null;
 
   users:UserResponseDTO[] = [];
   page = 0;
@@ -36,7 +39,10 @@ export class UserMain {
       },
       error: err => {
         this.loading = false;
-        console.error("Error:", err.error.status, err.error.message);
+        this.error = {
+          status: err.error.status,
+          message: err.error.message
+        }
       }
     });
   }
@@ -53,6 +59,7 @@ export class UserMain {
   }
 
   search(id: string){
+    if(!id) return;
     this.loading = true;
     this.userServ.listUser(Number(id)).subscribe({
       next : (data:UserResponseDTO) => {
@@ -63,9 +70,17 @@ export class UserMain {
       },
       error: err => {
         this.loading = false;
-        console.error("Error:", err.error.status, err.error.message);
+        this.error = {
+          status: err.error.status,
+          message: err.error.message
+        }
+        this.cdf.detectChanges();
       }
     })
+  }
+
+  closeError(){
+    this.error = null;
   }
 
   reset(input: HTMLInputElement){
