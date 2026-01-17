@@ -55,7 +55,7 @@ export class UserUpdate {
     const userEmailChanged = this.userSaved.email !== userForm.email;
 
     if(!userNameChanged && !userEmailChanged){
-      alert('Anything has not been changed!');
+      alert('Nenhuma alteração feita!');
       return;
     }
 

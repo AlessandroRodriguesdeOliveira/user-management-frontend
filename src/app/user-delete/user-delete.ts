@@ -26,7 +26,7 @@ export class UserDelete {
       this.id = Number(id);
       this.search();
     }else{
-      this.cancelar();
+      this.cancel();
     }
   }
 
@@ -44,15 +44,15 @@ export class UserDelete {
     })
   }
 
-  cancelar(){
+  cancel(){
     this.router.navigate(['/user'], { replaceUrl: true });
   }
 
-  deletarUser(){
+  deleteUser(){
     this.service.delete(this.id).subscribe({
       next: () =>{ 
         console.log("OK")
-        this.cancelar();
+        this.cancel();
       },
       error: err => console.log("Error:", err.error.message)
     });

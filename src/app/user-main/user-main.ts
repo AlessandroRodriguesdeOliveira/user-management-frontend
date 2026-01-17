@@ -37,7 +37,7 @@ export class UserMain {
     });
   }
 
-  carregarMais(){
+  load(){
     if(this.page + 1 < this.totalPages){
       this.page++;
       this.listAll()
