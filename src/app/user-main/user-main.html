@@ -1,4 +1,15 @@
-<main class="my-10">
+<main class="my-10 flex flex-col gap-5">
+    <div class="flex justify-center gap-2">
+        <input type="text" class="border-b border-b-gray-400 focus:outline-0 focus:border-b-blue-600 w-80" #filterInput>
+        <button (click)="search(filterInput.value)" class="bg-blue-700 p-2 rounded-md text-white font-bold hover:bg-blue-800 w-6 h-6 relative">
+            <span class="border-white border-2 rounded-3xl w-4 h-4 block absolute top-1 left-1"></span>
+            <span class="bg-white w-0.5 h-2 block absolute right-1/6 bottom-0 
+            rotate-320"></span>
+        </button>
+        <button (click)="reset(filterInput)" class="bg-blue-800 text-white font-extrabold rounded-md px-2">
+            Limpar
+        </button>
+    </div>
     <section class=" flex flex-row flex-wrap justify-center gap-5 ">
 
         @if(users.length === 0 && loading){
@@ -10,7 +21,7 @@
                     <h1 class="m-auto text-2xl text-red-800 font-bold">Sem usuários!</h1>
                 </article>
             }@else{
-                @for(user of users; track user){
+                @for(user of users; track user.id){
                     <article
                         class="rounded-lg max-w-80 p-4 border-gray-200 border bg-white shadow-md flex justify-center flex-col wrap-break-word gap-3">
                         <div class="flex">
@@ -33,6 +44,12 @@
                 }
             }
         }
-
+        
     </section>
+    
+    @if(hasNextPage()){
+        <button class="bg-blue-700 p-2 rounded-md text-white font-bold hover:bg-blue-800 m-auto" (click)="load()">Carregar mais...</button>
+    }
+    
+    
 </main>

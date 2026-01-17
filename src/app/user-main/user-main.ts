@@ -23,25 +23,57 @@ export class UserMain {
   ngOnInit(){
     this.listAll();
   }
+  
 
   listAll(){
     this.loading = true;
     this.userServ.listAll(this.page, 5).subscribe({
       next : (page : UserPage<UserResponseDTO> ) => {
-        this.users = page.content;
-        this.totalPages = page.totalElements;
+        this.users = [...this.users, ...page.content];
+        this.totalPages = page.totalPages;
         this.loading = false;
         this.cdf.detectChanges();
       },
-      error: () => this.loading = false
+      error: err => {
+        this.loading = false;
+        console.error("Error:", err.error.status, err.error.message);
+      }
     });
   }
 
-  load(){
-    if(this.page + 1 < this.totalPages){
-      this.page++;
-      this.listAll()
-    }
+  hasNextPage(): boolean{
+    return this.page + 1 < this.totalPages
+
   }
+
+  load(){
+    if(!this.hasNextPage()){return}
+    this.page++;
+    this.listAll();
+  }
+
+  search(id: string){
+    this.loading = true;
+    this.userServ.listUser(Number(id)).subscribe({
+      next : (data:UserResponseDTO) => {
+        this.users = [];
+        this.users = [data];
+        this.loading = false;
+        this.cdf.detectChanges();
+      },
+      error: err => {
+        this.loading = false;
+        console.error("Error:", err.error.status, err.error.message);
+      }
+    })
+  }
+
+  reset(input: HTMLInputElement){
+      input.value = '';
+      this.users = [];
+      this.page = 0;
+      this.totalPages = 0;
+      this.listAll();
+    }
 
 }
