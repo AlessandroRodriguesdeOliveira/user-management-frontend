@@ -5,6 +5,9 @@
 desenvolvido em **Angular**, responsável pela interface do usuário,
 consumo da API REST e experiência de uso.
 
+🔗 Backend disponível em:
+https://github.com/AlessandroRodriguesdeOliveira/user-management-backend
+
 Este projeto foi desenvolvido com o objetivo de aplicar conceitos relacionados ao __desenvolvimento de sistemas web, arquitetura REST, segurança, boas práticas de programação e integração entre frontend e backend__.
 
 O sistema permite o __cadastro, consulta, atualização e exclusão de usuários__, utilizando tecnologias modernas amplamente adotadas no mercado.
@@ -187,7 +190,7 @@ Minhas configurações, modifique-as, porém, lembre de atualizar no código:
 - user -> user1
 
 **OBS: as roles, são criadas na aba Client details e mapeadas ao user na tab Role Mapping**
-**Na hora da criação do user você coloca um email e marca email verifield e, em Credentials,** 
+**Na hora da criação do user você coloca um email e marca email verified e, em Credentials,** 
 **seta uma senha (opcional)**
 
 ## 🖥️ Frontend Angular
