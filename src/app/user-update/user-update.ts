@@ -1,8 +1,9 @@
-import { Component, inject, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { UserRequestDTO } from '../dto/UserRequestDTO';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Service } from '../service/service';
 import { ActivatedRoute } from '@angular/router';
+import { ErrorAlertDTO } from '../dto/ErrorAlertDTO';
 
 @Component({
   selector: 'app-user-update',
@@ -14,8 +15,11 @@ export class UserUpdate {
 
   serv = inject(Service);
   route = inject(ActivatedRoute);
+  cdf = inject(ChangeDetectorRef);
 
   id!: number;
+
+  error: ErrorAlertDTO | null = null;
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -40,7 +44,11 @@ export class UserUpdate {
         this.user.get('email')?.setValue(data.email) || '';
       }),
       error: (err => {
-        console.log("Error: ", err.error.message);
+        this.error = {
+          status: err.error.status,
+          message: err.error.message
+        }
+        this.cdf.detectChanges();
       })
     })
   }
@@ -55,7 +63,6 @@ export class UserUpdate {
     const userEmailChanged = this.userSaved.email !== userForm.email;
 
     if(!userNameChanged && !userEmailChanged){
-      alert('Nenhuma alteração feita!');
       return;
     }
 
@@ -63,9 +70,15 @@ export class UserUpdate {
       this.serv.updateComplete(this.id, userForm).subscribe({
         next:() =>{ 
           this.userSaved = {...userForm};
-          alert("UPATED!");
+          
       },
-        error: err => console.log("Error:", err.error.message)
+        error: err => {
+          this.error = {
+            status: err.error.status,
+            message: err.error.message
+          }
+          this.cdf.detectChanges();
+        }
       });
       return;
     }
@@ -78,10 +91,21 @@ export class UserUpdate {
     this.serv.updatePartial(this.id, partial).subscribe({
       next: () => {
         this.userSaved = {...userForm};
-        alert("UPATED!");
+        
     },
-      error: err => console.log("Error: ", err.error.message)
+      error: err => {
+        this.error = {
+          status: err.error.status,
+          message: err.error.message
+        }
+        this.cdf.detectChanges();
+      }
+
     })
     return;
+  }
+
+  closeError(){
+    this.error = null;
   }
 }

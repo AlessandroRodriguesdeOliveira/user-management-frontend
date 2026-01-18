@@ -1,7 +1,17 @@
-<main>
+<main class="flex flex-col gap-5">
+    @if(error?.status === 404){
+        <span class="bg-red-300 text-red-600 p-5 rounded-xl flex justify-between inset-shadow-red-600/40 inset-shadow-sm self-center items-center">
+            {{error?.message}}
+            <button (click)="closeError()" class="text-red-600 ml-3 font-extrabold hover:cursor-pointer">X</button>
+        </span>
+    }
     <form [formGroup]="user" class="border-gray-200 mx-auto my-10 p-5 w-100 border shadow flex flex-col gap-5">
 
         <h1 class="font-extrabold text-3xl text-center text-blue-700 my-5">Atualizar Usuário</h1>
+
+        @if(error?.status === 400){
+            <p class="text-red-600 font-extrabold self-center">{{error?.message}}</p>
+        }
         <div class="flex">
             <h3 class="rounded-md bg-purple-100 text-purple-500 px-1 w-fit  h-fit font-mono ">Nome:</h3>
             <input type="text" class="border-b border-b-gray-400 focus:outline-0 focus:border-b-purple-600 w-72 ml-2" formControlName="username">
