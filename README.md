@@ -141,9 +141,9 @@ foram executados via Docker Compose, garantindo isolamento e padronização do a
 
 1. Clone o repositório
 2. Execute o comando:
-   \`\`\`bash
+   ```bash
    ./mvnw spring-boot:run
-   \`\`\`
+   ```
 
 ## 📄 Documentação da API
 
