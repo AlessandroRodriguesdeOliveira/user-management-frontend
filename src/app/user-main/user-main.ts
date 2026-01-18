@@ -4,6 +4,7 @@ import { UserResponseDTO } from '../dto/UserResponseDTO';
 import { UserPage } from '../dto/UserPageDTO';
 import { RouterLink } from "@angular/router";
 import { ErrorAlertDTO } from '../dto/ErrorAlertDTO';
+import { KeycloakAuthService } from '../keycloak/keycloak.service';
 
 @Component({
   selector: 'app-user-main',
@@ -15,6 +16,7 @@ export class UserMain {
 
   userServ = inject(Service);
   cdf = inject(ChangeDetectorRef);
+  key = inject(KeycloakAuthService);
 
   error: ErrorAlertDTO | null = null;
 
@@ -26,8 +28,11 @@ export class UserMain {
   ngOnInit(){
     this.listAll();
   }
-  
 
+  isAdmin(): boolean {
+    return this.key.hasResourceRole('ADMIN', 'users-api');
+  }
+  
   listAll(){
     this.loading = true;
     this.userServ.listAll(this.page, 5).subscribe({
