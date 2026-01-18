@@ -1,16 +1,12 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { KeycloakAuthService } from '../keycloak/keycloak.service'; 
-import { catchError, from, switchMap } from 'rxjs';
+import { KeycloakAuthService } from '../keycloak/keycloak.service';
+import { catchError, from, switchMap, throwError } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(KeycloakAuthService);
 
-  if (req.method === 'OPTIONS') {
-    return next(req);
-  }
-
-  if (req.url.includes('/realms/')) {
+  if (req.method === 'OPTIONS' || req.url.includes('/realms/')) {
     return next(req);
   }
 
@@ -18,19 +14,22 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     switchMap(() => {
       const token = auth.token;
 
-      if (token) {
-        req = req.clone({
+      const authReq = token
+        ? req.clone({
           setHeaders: {
             Authorization: `Bearer ${token}`
           }
-        });
-      }
+        })
+        : req;
 
-      return next(req);
+      return next(authReq);
     }),
     catchError(err => {
-      console.error("Error update token: ", err.error.message);
-      return next(req);
+      if (err.status === 401 || err.status === 403) {
+        auth.login();
+      }
+
+      return throwError(() => err);
     })
   );
 };
