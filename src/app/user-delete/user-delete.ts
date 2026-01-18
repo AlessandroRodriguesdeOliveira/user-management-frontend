@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Service } from '../service/service';
-import { UserResponseDTO } from '../dto/UserResponseDTO';
+import { ErrorAlertDTO } from '../dto/ErrorAlertDTO';
 
 @Component({
   selector: 'app-user-delete',
@@ -19,6 +19,8 @@ export class UserDelete {
   id!: number;
   username!:string;
   email!:string;
+
+  error: ErrorAlertDTO | null = null;
 
   ngOnInit(){
     const id = this.url.snapshot.paramMap.get('id');
@@ -39,7 +41,11 @@ export class UserDelete {
         this.cdf.detectChanges();
       }),
       error: (err => {
-        console.log("Error: ", err.error.message);
+        this.error = {
+          status: err.error.status,
+          message: err.error.message
+        }
+        this.cdf.detectChanges();
       })
     })
   }
@@ -49,13 +55,24 @@ export class UserDelete {
   }
 
   deleteUser(){
+    if(this.id <= 0){
+      return;
+    }
     this.service.delete(this.id).subscribe({
       next: () =>{ 
-        console.log("OK")
         this.cancel();
       },
-      error: err => console.log("Error:", err.error.message)
+      error: (err => {
+        this.error = {
+          status: err.error.status,
+          message: err.error.message
+        }
+        this.cdf.detectChanges();
+      })
     });
   }
 
+  closeError(){
+    this.error = null;
+  }
 }

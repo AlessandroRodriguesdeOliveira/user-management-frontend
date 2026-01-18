@@ -1,8 +1,14 @@
-<main class="my-10">
+<main class="my-10 flex flex-col gap-5">
+    @if(error?.status){
+        <span class="bg-red-300 text-red-600 p-5 rounded-xl flex justify-between inset-shadow-red-600/40 inset-shadow-sm self-center items-center">
+            {{error?.message}}
+            <button (click)="closeError()" class="text-red-600 ml-10 font-extrabold hover:cursor-pointer">X</button>
+        </span>
+    }
     <section class=" flex flex-row flex-wrap justify-center gap-5 ">
                     <article
                         class="rounded-lg max-w-80 p-4 border-gray-200 border bg-white shadow-md flex justify-center flex-col wrap-break-word gap-3">
-                        <h1 class="font-extrabold text-red-600 text-2xl self-center">Você tem ceerteza?</h1>
+                        <h1 class="font-extrabold text-red-600 text-2xl self-center">Você tem certeza?</h1>
                         <div>
                             <h3 class="rounded-md bg-pink-100 text-pink-500 px-1 w-fit h-fit font-mono ">ID:</h3>
                             <p class="ml-2 max-w-50">{{ id }}</p>

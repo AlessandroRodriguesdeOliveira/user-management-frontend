@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { UserRequestDTO } from '../dto/UserRequestDTO';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Service } from '../service/service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorAlertDTO } from '../dto/ErrorAlertDTO';
 
 @Component({
@@ -16,6 +16,7 @@ export class UserUpdate {
   serv = inject(Service);
   route = inject(ActivatedRoute);
   cdf = inject(ChangeDetectorRef);
+  router = inject(Router);
 
   id!: number;
 
@@ -24,7 +25,12 @@ export class UserUpdate {
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.id = id;
-    this.list();
+    if(id){
+      this.list();
+    }else{
+      this.router.navigate(['/user'], { replaceUrl: true });
+    }
+    
   }
   userSaved: UserRequestDTO = {
     username:  '',
@@ -62,7 +68,7 @@ export class UserUpdate {
     const userNameChanged = this.userSaved.username !== userForm.username;
     const userEmailChanged = this.userSaved.email !== userForm.email;
 
-    if(!userNameChanged && !userEmailChanged){
+    if((!userNameChanged && !userEmailChanged) || this.id <= 0){
       return;
     }
 

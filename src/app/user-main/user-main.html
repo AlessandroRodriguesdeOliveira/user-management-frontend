@@ -1,5 +1,5 @@
 <main class="flex flex-col gap-5">
-    @if(error?.status === 404){
+    @if(error?.status){
         <span class="bg-red-300 text-red-600 p-5 rounded-xl flex justify-between inset-shadow-red-600/40 inset-shadow-sm self-center items-center">
             {{error?.message}}
             <button (click)="closeError()" class="text-red-600 ml-10 font-extrabold hover:cursor-pointer">X</button>
