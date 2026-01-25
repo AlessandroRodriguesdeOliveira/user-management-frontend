@@ -51,7 +51,7 @@ export class UserDelete {
   }
 
   cancel(){
-    this.router.navigate(['/user'], { replaceUrl: true });
+    this.router.navigate(['/user'], { replaceUrl: true, queryParams: {refresh: true} });
   }
 
   deleteUser(){
