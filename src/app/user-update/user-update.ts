@@ -108,7 +108,7 @@ export class UserUpdate {
       }
 
     })
-    return;
+    this.router.navigate(['/user'], { replaceUrl: true , queryParams:{ refresh: true} });
   }
 
   closeError(){
