@@ -12,6 +12,7 @@ import { KeycloakAuthService } from '../keycloak/keycloak.service';
   templateUrl: './user-main.html',
   styleUrl: './user-main.css',
 })
+
 export class UserMain {
 
   userServ = inject(Service);
